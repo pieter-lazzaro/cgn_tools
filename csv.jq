@@ -9,7 +9,7 @@ def status_log:
 ;
 
 def usinfo:
-     .[] | [(now|strftime("%Y-%m-%dT%H:%M:%SZ")),.channelId,.portId,.frequency,.modulationType,.signalStrength,.snr,.bandwidth]
+     .[] | [(now|strftime("%Y-%m-%dT%H:%M:%SZ")),.channelId,.portId,.frequency,.modulationType,.signalStrength,.snr,.bandwidth] | @csv
 ;
 
 def dsinfo:
