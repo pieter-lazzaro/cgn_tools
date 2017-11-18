@@ -33,6 +33,8 @@ case $1 in
     if [ ! -e $STATUS_LOG_FILE ]; then 
         echo $status_log_headers > $STATUS_LOG_FILE 
         get_data $1 >> $STATUS_LOG_FILE
+    elif [[ $(wc -l < $STATUS_LOG_FILE) -eq 1 ]]; then
+        get_data $1 >> $STATUS_LOG_FILE
     else
         last_date=`tail -1 $STATUS_LOG_FILE | awk -F ',' '{print $1}'`
         latest=`get_data $1`
