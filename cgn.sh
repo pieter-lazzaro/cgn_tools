@@ -1,14 +1,14 @@
 #!/bin/bash
-
+ROOT_DIR=`basename "$0"`
 ROUTER_IP=${CGN_IP:-192.168.0.1}
 USERNAME=${CGN_USERNAME:-cusadmin}
 PASSWORD=${CGN_PASSWORD:-password}
 FORMAT=${CGN_FORMAT:-csv}
 
-COOKIE_FILE=cookie.txt
-STATUS_LOG_FILE=status_log.csv
-USINFO_FILE=usinfo.csv
-DSINFO_FILE=dsinfo.csv
+COOKIE_FILE=$ROOT_DIR/cookie.txt
+STATUS_LOG_FILE=$ROOT_DIR/status_log.csv
+USINFO_FILE=$ROOT_DIR/usinfo.csv
+DSINFO_FILE=$ROOT_DIR/dsinfo.csv
 
 get_data() {
     page=$1
