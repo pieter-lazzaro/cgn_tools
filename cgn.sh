@@ -1,5 +1,5 @@
 #!/bin/bash
-ROOT_DIR=`basename "$0"`
+ROOT_DIR=`dirname "$0"`
 ROUTER_IP=${CGN_IP:-192.168.0.1}
 USERNAME=${CGN_USERNAME:-cusadmin}
 PASSWORD=${CGN_PASSWORD:-password}
