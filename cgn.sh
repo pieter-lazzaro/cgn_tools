@@ -16,6 +16,4 @@ get_data() {
     curl -s -c $COOKIE_FILE -b $COOKIE_FILE  http://$ROUTER_IP/goform/logout > /dev/null
 }
 
-cd /home/pi
-
 get_data $1
