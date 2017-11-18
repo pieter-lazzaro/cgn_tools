@@ -32,7 +32,7 @@ case $1 in
 "status_log")
     if [ ! -e $STATUS_LOG_FILE ]; then 
         echo $status_log_headers > $STATUS_LOG_FILE 
-        data=`get_data $1`
+        get_data $1 >> $STATUS_LOG_FILE
     else
         last_date=`tail -1 $STATUS_LOG_FILE | awk -F ',' '{print $1}'`
         latest=`get_data $1`
