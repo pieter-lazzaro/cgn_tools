@@ -1,4 +1,5 @@
 #!/usr/bin/env jq -f
+
 def to_influx:
     . as $i |
     $i | keys |
