@@ -20,6 +20,7 @@ def status_log:
         as
      [$tags, $values] |
      "status_log," + $tags + " " + $values
+;
 
 def usinfo:
      .[] |
