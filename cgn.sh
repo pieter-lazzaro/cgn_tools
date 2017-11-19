@@ -3,7 +3,7 @@ ROOT_DIR=`dirname "$0"`
 ROUTER_IP=${CGN_IP:-192.168.0.1}
 USERNAME=${CGN_USERNAME:-cusadmin}
 PASSWORD=${CGN_PASSWORD:-password}
-FORMAT_MODULE=${CGN_FORMAT:-$ROOT_DIR/csv}
+FORMAT_MODULE=${CGN_FORMAT:-csv}
 
 COOKIE_FILE=$ROOT_DIR/cookie.txt
 STATUS_LOG_FILE=$ROOT_DIR/status_log.csv
@@ -25,7 +25,7 @@ _logout() {
 get_data() {
     page=$1
     
-    curl -s -b $COOKIE_FILE c $COOKIE_FILE http://$ROUTER_IP/data/$page.asp | jq -c -M -r "include \"$FORMAT_MODULE\"; $page"
+    curl -s -b $COOKIE_FILE c $COOKIE_FILE http://$ROUTER_IP/data/$page.asp | jq -L$ROOT_DIR -c -M -r "include \"$FORMAT_MODULE\"; $page"
     
 }
 
