@@ -3,30 +3,37 @@ ROOT_DIR=`dirname "$0"`
 ROUTER_IP=${CGN_IP:-192.168.0.1}
 USERNAME=${CGN_USERNAME:-cusadmin}
 PASSWORD=${CGN_PASSWORD:-password}
-FORMAT=${CGN_FORMAT:-csv}
+FORMAT_MODULE=${CGN_FORMAT:-$ROOT_DIR/csv}
 
 COOKIE_FILE=$ROOT_DIR/cookie.txt
 STATUS_LOG_FILE=$ROOT_DIR/status_log.csv
 USINFO_FILE=$ROOT_DIR/usinfo.csv
 DSINFO_FILE=$ROOT_DIR/dsinfo.csv
 
-get_data() {
-    page=$1
-
+_login() {
     login_status=`curl -s -c $COOKIE_FILE -d "user=$USERNAME&pws=$PASSWORD" http://$ROUTER_IP/goform/login`
     if [[ $login_status != success* ]]; then
-        echo $login_status
+        echo $login_status >&2
         exit -1
     fi
+}
 
-    curl -s -b $COOKIE_FILE c $COOKIE_FILE http://$ROUTER_IP/data/$page.asp | jq -c -M -r "include \"./$FORMAT\"; $page"
-    #curl -s -b $COOKIE_FILE http://$ROUTER_IP/data/$page.asp
+_logout() {
     curl -s -c $COOKIE_FILE -b $COOKIE_FILE  http://$ROUTER_IP/goform/logout > /dev/null
+}
+
+get_data() {
+    page=$1
+    
+    curl -s -b $COOKIE_FILE c $COOKIE_FILE http://$ROUTER_IP/data/$page.asp | jq -c -M -r "include \"$FORMAT_MODULE\"; $page"
+    
 }
 
 status_log_headers='"timestamp","priority","type","event"'
 usinfo_headers='"timestamp","channelId","portId","frequency","modulationType","signalStrength","snr","bandwidth"'
 dsinfo_headers='"timestamp","channelId","portId","frequency","modulation","signalStrength","snr"'
+
+_login
 
 case $1 in
 "status_log")
@@ -63,3 +70,4 @@ case $1 in
     exit -1
 ;;
 esac
+_logout
